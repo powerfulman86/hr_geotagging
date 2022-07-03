@@ -42,7 +42,7 @@ class HrEmployee(models.Model):
             else:
                 emp.age = 0
 
-    @api.onchange('emergency_phone', 'phone', 'work_phone', 'mobile_phone', 'social_insurance_no')
+    @api.onchange('emergency_phone', 'phone', 'work_phone', 'mobile_phone')
     def check_phone_format(self):
         pattern = r"^[0-9]{11}"
         if self.emergency_phone:
@@ -57,10 +57,6 @@ class HrEmployee(models.Model):
         if self.mobile_phone:
             if not re.match(pattern, self.mobile_phone):
                 raise ValidationError(_("Mobile Phone Format isn't correct"))
-        pattern = r"^[0-9]{15}"
-        if self.social_insurance_no:
-            if not re.match(pattern, self.social_insurance_no):
-                raise ValidationError(_("Social Insurance Number Format isn't correct"))
 
     @api.constrains('work_email', 'private_email')
     def constraints_email(self):
