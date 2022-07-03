@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="hr_public_holiday_form_view" model="ir.ui.view">
+            <field name="name">"hr.public.holiday.form.view</field>
+            <field name="model">hr.public.holiday</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <field name="state" widget="statusbar" clickable="1"/>
+                    </header>
+                    <sheet>
+
+
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Holiday Reason"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <label for="date_from" string="Period"/>
+                            <div>
+                                <field name="date_from" class="oe_inline"/>
+                                -
+                                <field name="date_to" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="type_select" string="Apply On"/>
+                            <field name="type_select" widget="radio" nolabel="1"/>
+                            <field name="emp_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('type_select','!=','emp')]}"/>
+                            <field name="dep_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('type_select','!=','dep')]}"/>
+                            <field name="cat_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('type_select','!=','tag')]}"/>
+                        </group>
+                        <label for="note"/>
+                        <field name="note" placeholder="Notes"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="hr_public_holiday_tree_view" model="ir.ui.view">
+            <field name="name">"hr.public.holiday.tree.view</field>
+            <field name="model">hr.public.holiday</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+
+                </tree>
+            </field>
+        </record>
+        <record id="action_hr_public_holiday" model="ir.actions.act_window">
+            <field name="name">Public Holidays</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.public.holiday</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+                <p>
+                     More details about what a user can do with this object will be OK
+                </p>
+            </field>
+        </record>
+        <menuitem
+                id="menu_hr_public_holiday"
+                name="Public Holidays"
+                parent="hr_holidays.menu_hr_holidays_root"
+                sequence="96"
+                groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"/>
+        <menuitem id="menu_action_public_holiday" name="Public Holidays" parent="menu_hr_public_holiday"
+                  action="action_hr_public_holiday"
+                  sequence="96"/>
+    </data>
+</odoo>
